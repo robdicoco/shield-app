@@ -1,20 +1,28 @@
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Home } from './src/screens/Home/Home';
+import { Contact } from './src/screens/Contact/Contact';
 
 export default function App() {
+  const [currentScreen, setCurrentScreen] = useState<'home' | 'contact'>('home');
+
+  const handleNavigateToContact = () => {
+    setCurrentScreen('contact');
+  };
+
+  const handleReturnToHome = () => {
+    setCurrentScreen('home');
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar style="light" />
+      {currentScreen === 'home' ? (
+        <Home onNavigateToContact={handleNavigateToContact} />
+      ) : (
+        <Contact onReturn={handleReturnToHome} />
+      )}
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
